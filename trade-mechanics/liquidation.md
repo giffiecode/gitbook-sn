@@ -12,22 +12,22 @@ Anyone can liquidate an underwater short via `liquidate(mktId, user, percent)`.
 
 Partial closes use `percent` in `[10%, 100%]` (or `0` for full close). Penalty and bad-debt logic scale proportionally.
 
----
+***
 
-## Where the money goes
+## Liquidation Capital Flow &#x20;
 
-| Amount | Recipient | How |
-|---|---|---|
-| Collateral used to close vAMM position | **Vault** | `vault.accrueBase(baseConsumed)` |
-| Uncoverable shortfall | **Vault** (loss) | `vault.accrueBadDebt(shortfall)` |
-| 5% penalty × 90% | **Liquidator** | Clearing-house credit |
-| 5% penalty × 10% | **Protocol** | Manager clearing-house balance |
+| Amount                                 | Recipient        | How                              |
+| -------------------------------------- | ---------------- | -------------------------------- |
+| Collateral used to close vAMM position | **Vault**        | `vault.accrueBase(baseConsumed)` |
+| Uncoverable shortfall                  | **Vault** (loss) | `vault.accrueBadDebt(shortfall)` |
+| 5% penalty × 90%                       | **Liquidator**   | Clearing-house credit            |
+| 5% penalty × 10%                       | **Protocol**     | Manager clearing-house balance   |
 
 **Net to vault:** `baseConsumed − badDebt`. Healthy liquidations are positive; bad-debt events absorb the gap.
 
 If collateral is insufficient to close, clearing-house credit is used first; any residual shortfall becomes vault bad debt.
 
----
+***
 
 ## Foreclosure (alternative)
 
