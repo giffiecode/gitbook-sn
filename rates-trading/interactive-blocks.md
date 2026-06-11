@@ -21,16 +21,39 @@ layout:
 
 # Liquidation
 
-Liquidation occurs when a trader’s margin becomes insufficient to cover mark-to-market losses from adverse movements in the **implied rate** or **underlying rate**. **Longs cannot be liquidated**, since they pay the fixed rate upfront and have no ongoing liabilities—floating settlements are inflows, not obligations.&#x20;
+Liquidation closes an underwater **short** position before losses exceed posted collateral. Longs cannot be liquidated — they receive floating funding inflows, not liabilities.
 
+---
 
+## When it triggers
 
-**Shorts** receive the fixed rate upfront and pay the floating rate over time. If either the implied rate or the underlying rate rises, their position value deteriorates while floating liabilities accrue. When margin falls below maintenance requirements, the system automatically liquidates the position at the current implied rate, using remaining margin to settle losses and return any excess collateral.
+A short is liquidatable when its health ratio exceeds the market LTV (typically **75%**):
 
+$$
+\text{health} = \frac{|Q| \times \text{vAMM price} / 10^{18} \times 10^5}{\text{base}}
+$$
 
+Health is checked against a **TWAP** price (not spot) and after funding accrues into collateral. A high floating rate alone can push a short toward liquidation over time.
 
-**For Shorts, Maintenance Margin is calculated by:**&#x20;
+---
 
-```
-Maintenance Margin = Notional Size * Implied Rate * Time Duration * 0.75
-```
+## What happens
+
+1. Open orders are cancelled and collateral released.
+2. Outstanding funding is settled into `base`.
+3. The short is closed through the vAMM using the user's collateral.
+4. A **5% penalty** is charged — **90%** to the liquidator, **10%** to the protocol.
+
+If collateral cannot cover the close cost, the vault absorbs the shortfall as bad debt.
+
+---
+
+## Alternatives
+
+**Partial liquidation** closes 10–100% of the position to restore health without a full unwind.
+
+**Foreclosure** lets another party inject capital and take over the position with no vAMM swap — useful when pool liquidity is thin and a standard close would move price sharply.
+
+---
+
+For full mechanics, money flows, and vault guardrails, see [Position Health](../trade-mechanics/position-health.md), [Liquidation](../trade-mechanics/liquidation.md), and [Vault Guardrails](../trade-mechanics/vault-guardrails.md).
