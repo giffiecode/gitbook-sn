@@ -26,6 +26,11 @@
   * [Swaps](trade-mechanics/vamm/swaps.md)
   * [Settlement Accrual](trade-mechanics/vamm/settlement-accrual.md)
 * [Order Book](trade-mechanics/order-book.md)
+* [Position Health](trade-mechanics/position-health.md)
+* [Liquidation](trade-mechanics/liquidation.md)
+* [Vault Guardrails](trade-mechanics/vault-guardrails.md)
+* [Bootstrap Liquidity](trade-mechanics/bootstrap-liquidity.md)
+* [Key Parameters](trade-mechanics/key-parameters.md)
 
 ## Security&#x20;
 
