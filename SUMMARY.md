@@ -21,7 +21,7 @@
 
 ## Trade Mechanics
 
-* [Vault](trade-mechanics/vault.md)
+* [SLP Vault](trade-mechanics/vault.md)
 * [vAMM](trade-mechanics/vamm/README.md)
   * [Swaps](trade-mechanics/vamm/swaps.md)
   * [Settlement Accrual](trade-mechanics/vamm/settlement-accrual.md)
