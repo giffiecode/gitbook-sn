@@ -9,6 +9,8 @@
 * [User Guide: One-Click Fixing Rate](fixed-rate-borrowing/user-guide-one-click-fixing-rate/README.md)
   * [Borrow at Fixed Rate From Aave / Morpho](fixed-rate-borrowing/user-guide-one-click-fixing-rate/borrow-at-fixed-rate-from-aave-morpho.md)
   * [Lend at Boosted Fixed Rate on Aave / Morpho](fixed-rate-borrowing/user-guide-one-click-fixing-rate/lend-at-boosted-fixed-rate-on-aave-morpho.md)
+* [Fixed Rate Yield Boost](fixed-rate-borrowing/fixed-rate-yield-boost/README.md)
+  * [How to Earn Boosted Fixed Rate](fixed-rate-borrowing/fixed-rate-yield-boost/how-to-earn-boosted-fixed-rate.md)
 
 ## Rates Trading
 
