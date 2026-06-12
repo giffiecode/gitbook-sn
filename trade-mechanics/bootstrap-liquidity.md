@@ -28,7 +28,7 @@ Markets launch with zero open interest. Two actors seed liquidity together.
 
 ***
 
-## How flow is routed
+## Flow Routing&#x20;
 
 1. **Most flow → LOB.** The router sends each order to the cheaper venue. With a tight MM ladder (±2 bps), the LOB wins most price comparisons. Vault is not involved.
 2. **Residual flow → vAMM.** Large orders or one-sided books spill to the pool. Vault takes counterparty PnL.
