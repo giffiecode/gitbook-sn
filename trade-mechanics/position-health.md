@@ -49,4 +49,4 @@ $$
 | Long (`Q > 0`)  | `base += payment` |
 | Short (`Q < 0`) | `base -= payment` |
 
-If a short cannot pay, the deficit is written to the vault as bad debt and collateral is zeroed. A persistently high floating rate (e.g. 40–60% APR) can make a position liquidatable over hours or days — no sudden price spike required.
+If a short cannot pay, the deficit is written to the vault as bad debt and collateral is zeroed. Without the upwards movement of Implied APR, a persistently high floating rate can make a position liquidatable over settlement accrual.&#x20;
