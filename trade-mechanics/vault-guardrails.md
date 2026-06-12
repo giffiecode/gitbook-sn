@@ -2,7 +2,7 @@
 
 Circuit breakers and loss-sharing rules that bound vault risk.
 
----
+***
 
 ## Exposure cap (flow control)
 
@@ -28,26 +28,26 @@ $$
 
 Revert if `|diff| > totalAssets / exposureCap` **and** `diff < 0`.
 
-| Protected | Not protected |
-|---|---|
-| New trade that would push vault loss > 25% TVL | Existing exposure as vAMM price drifts |
-| Deposits/withdrawals that breach the cap | Losses crystallised during liquidation or maturity |
+| Protected                                          | Not protected                                      |
+| -------------------------------------------------- | -------------------------------------------------- |
+| New trade that would push vault exposure > 25% TVL | Existing exposure as vAMM price drifts             |
+| Deposits/withdrawals that breach the cap           | Losses crystallised during liquidation or maturity |
 
-Guard rails stop the **next** trade from worsening stress — they are not a P&L floor.
+Guard rails stop the **next** trade from worsening stress — they are not a P\&L floor.
 
----
+***
 
 ## Phi (φ) — partial funding
 
-When the vault cannot fully cover lenders' floating obligation during `settleFunding`:
+When the vault cannot fully cover short's floating obligation during `settleFunding`:
 
 $$
 \phi = \min\!\left(1,\; \frac{\text{vaultHeadroom}}{\text{vaultFlow}}\right)
 $$
 
-Longs receive `φ × payment` instead of the full amount. The shortfall hits `vaultPnL`, reducing PPS for all LPs proportionally — a real-time haircut rather than a binary default.
+Longs receive `φ × payment` instead of the full amount. The shortfall hits `vaultPnL`, reducing PPS (Price per share) for all LPs proportionally — a real-time haircut rather than a binary default.
 
----
+***
 
 ## Price per share
 
@@ -59,13 +59,13 @@ $$
 
 If `vaultHeadroomLessAccrued = 0`, new deposits revert (`VaultInsolvent`). The vault is exit-only until maturity or PnL recovery.
 
----
+***
 
 ## Vault cap
 
 Per-market absolute TVL limit. New deposits revert with `VaultCapExceeded` when `currentTVL + deposit > vaultCap`.
 
----
+***
 
 ## Maturity settlement
 
