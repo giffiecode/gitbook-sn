@@ -10,7 +10,7 @@ Anyone can liquidate an underwater short via `liquidate(mktId, user, percent)`.
 4. **Close via vAMM** — short notional is bought back using the user's collateral.
 5. **Penalty** — 5% of collateral consumed, split 90% liquidator / 10% protocol.
 
-Partial closes use `percent` in `[10%, 100%]` (or `0` for full close). Penalty and bad-debt logic scale proportionally.
+Partial Liquidation use `percent` in `[10%, 100%]` (or `0` for full close). Penalty and bad-debt logic scale proportionally.
 
 ***
 
