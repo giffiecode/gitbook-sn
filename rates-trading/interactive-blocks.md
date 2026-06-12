@@ -23,7 +23,7 @@ layout:
 
 Liquidation closes an underwater **short** position before losses exceed posted collateral. Longs cannot be liquidated — they receive floating funding inflows, not liabilities.
 
----
+***
 
 ## When it triggers
 
@@ -35,7 +35,7 @@ $$
 
 Health is checked against a **TWAP** price (not spot) and after funding accrues into collateral. A high floating rate alone can push a short toward liquidation over time.
 
----
+***
 
 ## What happens
 
@@ -46,7 +46,7 @@ Health is checked against a **TWAP** price (not spot) and after funding accrues 
 
 If collateral cannot cover the close cost, the vault absorbs the shortfall as bad debt.
 
----
+***
 
 ## Alternatives
 
@@ -54,6 +54,6 @@ If collateral cannot cover the close cost, the vault absorbs the shortfall as ba
 
 **Foreclosure** lets another party inject capital and take over the position with no vAMM swap — useful when pool liquidity is thin and a standard close would move price sharply.
 
----
+***
 
-For full mechanics, money flows, and vault guardrails, see [Position Health](../trade-mechanics/position-health.md), [Liquidation](../trade-mechanics/liquidation.md), and [Vault Guardrails](../trade-mechanics/vault-guardrails.md).
+For full mechanics, money flows, and vault guardrails, see [Position Health](../market-mechanics/position-health.md), [Liquidation](../market-mechanics/liquidation.md), and [Vault Guardrails](../market-mechanics/vault-guardrails.md).

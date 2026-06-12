@@ -19,18 +19,18 @@
 * [Liquidation](rates-trading/interactive-blocks.md)
 * [Fee](rates-trading/fee.md)
 
-## Trade Mechanics
+## Market Mechanics
 
-* [SLP Vault](trade-mechanics/vault.md)
-* [vAMM](trade-mechanics/vamm/README.md)
-  * [Swaps](trade-mechanics/vamm/swaps.md)
-  * [Settlement Accrual](trade-mechanics/vamm/settlement-accrual.md)
-* [Order Book](trade-mechanics/order-book.md)
-* [Position Health](trade-mechanics/position-health.md)
-* [Liquidation](trade-mechanics/liquidation.md)
-* [Vault Guardrails](trade-mechanics/vault-guardrails.md)
-* [Market Liquidity](trade-mechanics/bootstrap-liquidity.md)
-* [Key Parameters](trade-mechanics/key-parameters.md)
+* [SLP Vault](market-mechanics/vault.md)
+* [vAMM](market-mechanics/vamm/README.md)
+  * [Swaps](market-mechanics/vamm/swaps.md)
+  * [Settlement Accrual](market-mechanics/vamm/settlement-accrual.md)
+* [Order Book](market-mechanics/order-book.md)
+* [Position Health](market-mechanics/position-health.md)
+* [Liquidation](market-mechanics/liquidation.md)
+* [Vault Guardrails](market-mechanics/vault-guardrails.md)
+* [Market Liquidity](market-mechanics/bootstrap-liquidity.md)
+* [Key Parameters](market-mechanics/key-parameters.md)
 
 ## Security
 
