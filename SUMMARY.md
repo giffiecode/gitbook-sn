@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Mission: Bring Rates Predictability On-chain](README.md)
-* [Supernova Interest Rates Market](readme.md)
+* [Interest Rates Market](readme.md)
 * [Glossary](glossary.md)
 
 ## Fixed Rate Borrowing
