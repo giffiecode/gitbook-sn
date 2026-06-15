@@ -4,7 +4,7 @@ Circuit breakers and loss-sharing rules that bound vault risk.
 
 ***
 
-## Exposure cap (flow control)
+## Exposure Cap&#x20;
 
 Default `exposureCap = 4` → threshold is **25% of TVL** (`totalAssets / exposureCap`).
 
@@ -33,7 +33,9 @@ Revert if `|diff| > totalAssets / exposureCap` **and** `diff < 0`.
 | New trade that would push vault exposure > 25% TVL | Existing exposure as vAMM price drifts             |
 | Deposits/withdrawals that breach the cap           | Losses crystallised during liquidation or maturity |
 
-Guard rails stop the **next** trade from worsening stress — they are not a P\&L floor.
+Guard rails stop the **next** trade from worsening stress: **they are not a P\&L floor.** \
+\
+Per-market absolute TVL limit. New deposits revert with `VaultCapExceeded` when `currentTVL + deposit > vaultCap`.
 
 ***
 
@@ -61,13 +63,7 @@ If `vaultHeadroomLessAccrued = 0`, new deposits revert (`VaultInsolvent`). The v
 
 ***
 
-## Vault cap
-
-Per-market absolute TVL limit. New deposits revert with `VaultCapExceeded` when `currentTVL + deposit > vaultCap`.
-
-***
-
-## Maturity settlement
+## Maturity Settlement
 
 At maturity, `vaultPnL` crystallises into `totalAssets`:
 

@@ -43,4 +43,4 @@ The caller injects fresh capital from their clearing-house balance and absorbs t
 
 Governance can toggle foreclosure via `setIsForeclosureAllowed`. Prefer it in volatile, low-liquidity conditions where a vAMM close would move price sharply.\
 \
-For more, see [Liquidation Threshold](https://supernova-10.gitbook.io/parrate/rates-trading/interactive-blocks).&#x20;
+For more, see [Liquidation Threshold](https://supernova-10.gitbook.io/parrate/rates-trading/interactive-blocks) and [Position Health](https://supernova-10.gitbook.io/parrate/market-mechanics/position-health).&#x20;

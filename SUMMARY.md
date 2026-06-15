@@ -23,14 +23,14 @@
 
 ## Market Mechanics
 
-* [SLP Vault](market-mechanics/vault.md)
+* [SLP Vault](market-mechanics/vault/README.md)
+  * [Vault Guardrails](market-mechanics/vault/vault-guardrails.md)
 * [vAMM](market-mechanics/vamm/README.md)
   * [Swaps](market-mechanics/vamm/swaps.md)
   * [Settlement Accrual](market-mechanics/vamm/settlement-accrual.md)
 * [Order Book](market-mechanics/order-book.md)
 * [Position Health](market-mechanics/position-health.md)
 * [Liquidation](market-mechanics/liquidation.md)
-* [Vault Guardrails](market-mechanics/vault-guardrails.md)
 * [Market Liquidity](market-mechanics/bootstrap-liquidity.md)
 * [Key Parameters](market-mechanics/key-parameters.md)
 

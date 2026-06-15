@@ -41,4 +41,4 @@ Health is checked against a **TWAP** price (not spot) and after funding accrues 
 
 ***
 
-For full mechanics, money flows, and vault guardrails, see [Position Health](../market-mechanics/position-health.md), [Liquidation](../market-mechanics/liquidation.md), and [Vault Guardrails](../market-mechanics/vault-guardrails.md).
+For full mechanics, money flows, and vault guardrails, see [Position Health](../market-mechanics/position-health.md), [Liquidation](../market-mechanics/liquidation.md), and [Vault Guardrails](../market-mechanics/vault/vault-guardrails.md).
