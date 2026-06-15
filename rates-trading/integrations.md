@@ -26,7 +26,7 @@ Closing a position means exiting at the **current implied rate**, not the floati
 At close:
 
 * The position is offset by taking the opposite side at the new implied rate for the same remaining tenor.
-* The **difference between the entry implied rate and exit implied rate** determines realized PnL.
-* All **floating-rate accruals** up to that point are already settled continuously as cashflow, so closing only realizes the change in implied rate, not past accruals.
+* The **difference between the entry implied rate and exit implied rate** determines realized PnL at closing&#x20;
+* All **floating-rate accruals** up to that point are already settled continuously as cashflow, so closing only realizes the change in implied rate, not past settlement payments accruals.
 
-Effectively, closing crystallizes the mark-to-market value of the rate view while leaving prior floating settlements untouched.
+Effectively, closing realizes the mark-to-market value of the rate view while leaving prior floating settlements untouched.

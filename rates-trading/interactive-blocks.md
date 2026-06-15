@@ -21,11 +21,15 @@ layout:
 
 # Liquidation
 
-Liquidation closes an underwater **short** position before losses exceed posted collateral. Longs cannot be liquidated — they receive floating funding inflows, not liabilities.
+Liquidation closes an underwater **short** position before losses exceed posted collateral. \
+\
+Currently, the system doesn't allow any explicit leverage. Long side settle all their fixed rate liabilities upfront and don't face any liquidation risk.&#x20;
+
+Since short side's liability is the floating rate, short side's floating rate liability accruals continuously and might get liquidated when a) implied rate rises sharply or b) when floating rate stays high for a prolonged period of time.&#x20;
 
 ***
 
-## When it triggers
+## Liquidation Threshold&#x20;
 
 A short is liquidatable when its health ratio exceeds the market LTV (typically **75%**):
 
@@ -37,22 +41,22 @@ Health is checked against a **TWAP** price (not spot) and after funding accrues 
 
 ***
 
-## What happens
+## Liquidation Process&#x20;
 
-1. Open orders are cancelled and collateral released.
+1. Liquidated position is cancelled and collateral released.
 2. Outstanding funding is settled into `base`.
 3. The short is closed through the vAMM using the user's collateral.
-4. A **5% penalty** is charged — **90%** to the liquidator, **10%** to the protocol.
+4. A **5% penalty** is charged: **90%** to the liquidator, **10%** to the protocol.
 
 If collateral cannot cover the close cost, the vault absorbs the shortfall as bad debt.
 
-***
-
-## Alternatives
-
 **Partial liquidation** closes 10–100% of the position to restore health without a full unwind.
 
-**Foreclosure** lets another party inject capital and take over the position with no vAMM swap — useful when pool liquidity is thin and a standard close would move price sharply.
+***
+
+## Liquidation Alternative: Foreclosure&#x20;
+
+**Foreclosure** lets another party inject capital and take over the position with no vAMM swap. It is useful when pool liquidity is thin and a standard close would move price sharply.
 
 ***
 
