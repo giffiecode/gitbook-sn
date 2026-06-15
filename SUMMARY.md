@@ -18,7 +18,7 @@
 * [Short Rate](rates-trading/markdown.md)
 * [Open Position](rates-trading/images-and-media.md)
 * [Close Position](rates-trading/integrations.md)
-* [Liquidation](rates-trading/interactive-blocks.md)
+* [Liquidation Threshold](rates-trading/interactive-blocks.md)
 * [Fee](rates-trading/fee.md)
 
 ## Market Mechanics

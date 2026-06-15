@@ -19,7 +19,7 @@ layout:
     visible: true
 ---
 
-# Liquidation
+# Liquidation Threshold
 
 Liquidation closes an underwater **short** position before losses exceed posted collateral. \
 \
@@ -38,25 +38,6 @@ $$
 $$
 
 Health is checked against a **TWAP** price (not spot) and after funding accrues into collateral. A high floating rate alone can push a short toward liquidation over time.
-
-***
-
-## Liquidation Process&#x20;
-
-1. Liquidated position is cancelled and collateral released.
-2. Outstanding funding is settled into `base`.
-3. The short is closed through the vAMM using the user's collateral.
-4. A **5% penalty** is charged: **90%** to the liquidator, **10%** to the protocol.
-
-If collateral cannot cover the close cost, the vault absorbs the shortfall as bad debt.
-
-**Partial liquidation** closes 10–100% of the position to restore health without a full unwind.
-
-***
-
-## Liquidation Alternative: Foreclosure&#x20;
-
-**Foreclosure** lets another party inject capital and take over the position with no vAMM swap. It is useful when pool liquidity is thin and a standard close would move price sharply.
 
 ***
 

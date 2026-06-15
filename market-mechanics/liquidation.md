@@ -41,4 +41,6 @@ user wiped       → base = 0, quote = 0
 
 The caller injects fresh capital from their clearing-house balance and absorbs the position. The **combined** book must pass the strict 67.5% safe check or the transaction reverts.
 
-Governance can toggle foreclosure via `setIsForeclosureAllowed`. Prefer it in volatile, low-liquidity conditions where a vAMM close would move price sharply.
+Governance can toggle foreclosure via `setIsForeclosureAllowed`. Prefer it in volatile, low-liquidity conditions where a vAMM close would move price sharply.\
+\
+For liquidation threshold, see Liquidation Threshold.&#x20;
