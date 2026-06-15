@@ -14,7 +14,7 @@ Partial Liquidation use `percent` in `[10%, 100%]` (or `0` for full close). Pena
 
 ***
 
-## Liquidation Capital Flow &#x20;
+## Liquidation Flow
 
 | Amount                                 | Recipient        | How                              |
 | -------------------------------------- | ---------------- | -------------------------------- |
@@ -29,9 +29,9 @@ If collateral is insufficient to close, clearing-house credit is used first; any
 
 ***
 
-## Foreclosure (alternative)
+## Foreclosure Flow
 
-Foreclosure bypasses the vAMM — no price impact, no cascade risk.
+Foreclosure bypasses the vAMM and causes no price impact nor cascade risk.
 
 ```
 new_caller.base  = caller.base + capitalInfusion + user.base
