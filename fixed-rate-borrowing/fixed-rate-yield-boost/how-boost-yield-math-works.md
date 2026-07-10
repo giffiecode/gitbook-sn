@@ -67,7 +67,7 @@ The boost is imperfect when utilization moves away from $u_{\text{open}}$. But b
 
 ## Effective Supply APY
 
-**Effective Supply APY** is the headline yield on your **entire** Aave balance for that asset — boosted and unboosted slices combined. This is the number shown in the app.
+**Effective Supply APY** is the headline yield on your **entire** Aave balance for that asset — boosted and unboosted slices combined.
 
 Each boost locks a **boost rate** on the slice you boosted:
 
@@ -75,4 +75,4 @@ $$
 r_{\text{boost}} = (1 - rf) \cdot u_{\text{open}} \cdot r_{\text{fixed, open}}
 $$
 
-Effective Supply APY is the **size-weighted blend** of each boosted slice earning its locked $r_{\text{boost}}$ and any remaining unboosted lend earning the live supply rate $r_{\text{supply}}$. If only part of your lend is boosted, the headline sits between $r_{\text{supply}}$ and your locked boost rate(s).
+Effective Supply APY is the **size-weighted blend** of each boosted slice earning its locked $r_{\text{boost}}$ and any remaining unboosted lend earning the live supply rate $r_{\text{supply}}$.
