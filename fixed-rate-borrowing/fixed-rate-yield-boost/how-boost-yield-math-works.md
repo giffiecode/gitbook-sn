@@ -17,7 +17,7 @@ The floating you earn from Aave and the floating you pay on Supernova are built 
 
 ### Aave Lending
 
-You keep earning floating **supply** yield on the boosted lend. On Aave you earn:
+You keep earning floating **supply** yield on the boosted lend. On Aave, you accrue:
 
 $$
 L \cdot r_{\text{supply}} = L \cdot (1 - rf) \cdot u_{\text{underlying, now}} \cdot r_{\text{borrow, now}}
@@ -32,6 +32,8 @@ To boost your Position Amount $L$, you take a **short position with notional**:
 $$
 N = L \cdot (1 - rf) \cdot u_{\text{open}}
 $$
+
+$u_{\text{open}}$ is the pool **utilization at open** — it sizes your short notional and pairs with the locked fixed rate $r_{\text{fixed, open}}$. For a **market short**, it is pool utilization when the order executes; for a **limit short**, it is the utilization implied by your Desired APR when the order fills. Unlike $u_{\text{underlying, now}}$, it does not change after the short opens.
 
 Holding that short leads to the following cashflows — you pay floating and receive fixed on $N$:
 
