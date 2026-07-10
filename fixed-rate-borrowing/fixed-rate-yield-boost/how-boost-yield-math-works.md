@@ -17,7 +17,7 @@ The floating you earn from Aave and the floating you pay on Supernova are built 
 
 ### Aave Lending
 
-You keep earning floating **supply** yield on the boosted lend. On Aave, you receive per unit time:
+On Aave, for a lending of size $L$, you receive per unit time:
 
 $$
 L \cdot r_{\text{supply}} = L \cdot (1 - rf) \cdot u_{\text{underlying, now}} \cdot r_{\text{borrow, now}}
