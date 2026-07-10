@@ -15,7 +15,7 @@ The floating you earn from Aave and the floating you pay on Supernova are built 
 
 ## The cashflows
 
-### Aave
+### Aave Lending
 
 You keep earning floating **supply** yield on the boosted lend. On Aave you earn:
 
@@ -58,7 +58,7 @@ For a limit short, that slice of lend stays on pure Aave floating until the orde
 Adding the Aave leg and the two Supernova legs together:
 
 $$
-\text{Total P\&L} = L \cdot (1 - rf) \Big[ u_{\text{open}} \cdot r_{\text{fixed, open}} + r_{\text{borrow, now}} \cdot \big(u_{\text{underlying, now}} - u_{\text{open}}\big) \Big]
+\text{Total PnL} = L \cdot (1 - rf) \Big[ u_{\text{open}} \cdot r_{\text{fixed, open}} + r_{\text{borrow, now}} \cdot \big(u_{\text{underlying, now}} - u_{\text{open}}\big) \Big]
 $$
 
 The first term is the **locked fixed** on your short notional. The second term is what changes when pool utilization moves away from $u_{\text{open}}$. If utilization never moved ($u_{\text{underlying, now}} = u_{\text{open}}$), the floating legs cancel exactly and you earn the locked fixed.
@@ -71,8 +71,6 @@ The boost is imperfect when utilization moves away from $u_{\text{open}}$. But b
 
 - **Float goes up** ($u_{\text{underlying, now}} > u_{\text{open}}$): the lender earns more than the locked rate, since the lender gets a higher payment from Aave than what they owe on their short position floating payments.
 - **Float goes down** ($u_{\text{underlying, now}} < u_{\text{open}}$): the lender earns less than the locked rate, but the payment from the long is greater than what it would have gotten from the Aave pool.
-
-Because $r_{\text{borrow}}$ and $u$ move together on the interest rate curve, the payoff is **convex in utilization** — gains from rising utilization are amplified, losses from falling utilization are dampened.
 
 ---
 
@@ -106,15 +104,3 @@ $$
 $$
 
 Because it is a blend, the headline number sits between $r_{\text{supply}}$ and your locked $r_{\text{boost},i}$ rates.
-
-### Multiple markets with varying maturities
-
-You can also boost the same lend across multiple markets with different maturities, each boost with its own $\tau_i$. Each boost earns its locked $r_{\text{boost},i}$ until its maturity $\tau_i$, then reverts to $r_{\text{supply}}$ out to the latest maturity among these markets $\tau_{\max}$:
-
-$$
-Y = \sum_i L_i \,(1 + r_{\text{boost},i})^{\tau_i} (1 + r_{\text{supply}})^{\tau_{\max} - \tau_i} + \Big(L_{\text{total}} - \sum_i L_i\Big)(1 + r_{\text{supply}})^{\tau_{\max}}
-$$
-
-$$
-\text{Effective Supply APY} = \left(\frac{Y}{L_{\text{total}}}\right)^{1/\tau_{\max}} - 1
-$$
