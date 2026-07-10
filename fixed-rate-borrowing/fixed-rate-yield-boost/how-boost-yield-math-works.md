@@ -42,17 +42,6 @@ $$
 \end{aligned}
 $$
 
-Floating payments use live underlying borrow rate but fixed received is locked at open.
-
-$u_{\text{open}}$ is the utilization used to calculate your notional amount and depends on the order type:
-
-| Order type | Open utilization |
-|---|---|
-| **Market short** | Pool utilization when the short opens |
-| **Limit short** | Utilization implied by your Desired APR / fixed rate at open |
-
-For a limit short, that slice of lend stays on pure Aave floating until the order **executes**; the short legs above turn on at execution.
-
 ### Total P&L on the boosted slice
 
 Adding the Aave leg and the two Supernova legs together:
