@@ -1,59 +1,87 @@
 # How Boost Yield Math Works
 
-A plain-language guide to the numbers behind Yield Boost: why a short locks in fixed yield, how position size maps to a Supernova hedge, and what **Effective Supply APY** means on your total Aave balance.
+Plain-language guide to the numbers in Yield Boost: what you earn on Aave, what you pay and receive on the Supernova short, and how the two offset into a boosted fixed yield. Also covers what **Effective Supply APY** means on your total Aave balance.
 
 ---
 
 ## The two legs
-
-Boost Yield combines:
 
 | Leg | Where | You receive | You pay |
 |---|---|---|---|
 | Lending | Aave | Floating supply yield | — |
 | Short rate | Supernova | Fixed rate | Floating rate |
 
-On the short, **receive fixed / pay floating** is the standard rates-market short: you lock in a fixed rate and pay whatever the underlying floating rate is over the tenor.
+A **short** on Supernova means you **receive fixed** and **pay floating** for the chosen tenor. **Position Amount (L)** is how much of your Aave lend you choose to hedge.
 
-Your Aave deposit still earns floating. That floating income roughly **offsets** the floating you pay on Supernova, so the net profile looks like a **boosted fixed** yield on the hedged slice:
+The floating you earn from Aave and the floating you pay on Supernova are built to **offset each other**, leaving the fixed rate as your yield on the hedged slice. The sections below show the actual cashflows — and why utilization drift after the short opens is usually still favorable.
 
-$$
-\text{net on hedged slice} \approx \underbrace{\text{Aave float}}_{\text{earn}} - \underbrace{\text{Supernova float}}_{\text{pay}} + \underbrace{\text{Supernova fixed}}_{\text{earn}}
-$$
-
-When the fixed rate is above the floating lending rate, the leftover is your boost:
-
-$$
-\text{boost} \approx \text{fixed rate} - \text{floating lending rate}
-$$
-
-**When boost is not attractive:** if fixed ≤ floating, shorting does not improve your yield versus simply lending on Aave. Enter only when fixed trades **above** float (or set a limit Desired APR and wait).
+**When boost is not attractive:** if the implied fixed rate is at or below the floating **borrow** rate, shorting does not beat simply lending on Aave. Enter when fixed is **above** floating borrow, or set a higher Desired APR as a limit and wait.
 
 ---
 
-## Position Amount (L) vs Notional (N)
+## The cashflows
 
-In the Boost modal:
+### Aave (ongoing)
 
-- **Position Amount (L)** — how much of your Aave lend you want to hedge (e.g. $5,000 of a $10,000 deposit).
-- **Notional (N)** — the size of the Supernova short. This is usually **smaller than L**.
-
-### Why N is smaller than L
-
-On Aave, only part of a lending pool’s deposits are “rate-sensitive” at any moment — roughly the share that is borrowed, after the protocol’s reserve factor. Boost sizes the short to that slice so the floating legs line up:
+You keep earning floating **supply** yield on the hedged lend. On Aave you earn:
 
 $$
-N \approx L \times u \times (1 - rf)
+L \cdot r_{\text{supply}} = L \cdot (1 - rf) \cdot u_{\text{underlying, now}} \cdot r_{\text{borrow, now}}
 $$
 
-where:
+where \(rf\) is the Aave **reserve factor**, \(u\) is pool **utilization**, and \(r_{\text{borrow}}\) is the floating **borrow rate**. Utilization and borrow rate here are **live** — they move with the pool after you boost.
 
-- \(u\) = pool **utilization** (how much of the pool is borrowed)
-- \(rf\) = **reserve factor** (share of interest kept by the protocol)
+### Supernova short (locked at open)
 
-**Intuition:** if utilization is 80% and reserve factor is 10%, then about \(0.80 \times 0.90 = 72\%\) of each dollar of lend is rate-sensitive — so a $5,000 Position Amount maps to roughly **$3,600** of Supernova notional, not $5,000.
+To hedge your Position Amount \(L\), you take a **short position with notional**:
 
-You do not need to compute this by hand; the quote shows notional for you. The important takeaway: **hedging $L of lend does not mean a $L short.**
+$$
+N = L \cdot (1 - rf) \cdot u_{\text{open}}
+$$
+
+Holding that short leads to the following cashflows — you pay floating and receive fixed on \(N\):
+
+$$
+\begin{aligned}
+\text{pay (floating)} &= N \cdot r_{\text{borrow, now}} = L \cdot (1 - rf) \cdot u_{\text{open}} \cdot r_{\text{borrow, now}} \\
+\text{receive (fixed)} &= N \cdot r_{\text{fixed, open}} = L \cdot (1 - rf) \cdot u_{\text{open}} \cdot r_{\text{fixed, open}}
+\end{aligned}
+$$
+
+Floating on Supernova uses **today’s** borrow rate, but utilization is **locked when the short opens**. Fixed is also locked at open.
+
+\(u_{\text{open}}\) is the utilization locked in when your short opens, and depends on the order type:
+
+| Order type | \(u_{\text{open}}\) |
+|---|---|
+| **Market short** | \(u_{\text{underlying, open}}\) — pool utilization when the short opens |
+| **Limit short** | \(u_{\text{implied, open}}\) — utilization implied by your Desired APR / fixed rate at open |
+
+For a limit short, that slice of lend stays on pure Aave floating until the order **executes**; the short legs above turn on at execution.
+
+### Total P&L on the hedged slice
+
+Adding the Aave leg and the two Supernova legs together:
+
+$$
+\text{Total P\&L} = L \cdot (1 - rf) \Big[
+u_{\text{open}} \cdot r_{\text{fixed, open}}
++ r_{\text{borrow, now}} \cdot \big(u_{\text{underlying, now}} - u_{\text{open}}\big)
+\Big]
+$$
+
+The first term is the **locked fixed** on your hedge notional. The second term is what changes when pool utilization moves away from \(u_{\text{open}}\). If utilization never moved (\(u_{\text{underlying, now}} = u_{\text{open}}\)), the floating legs cancel exactly and you earn the locked fixed.
+
+---
+
+## Why utilization changes are still favorable
+
+The hedge is imperfect when utilization moves away from \(u_{\text{open}}\). But both directions still work in the lender's favor:
+
+- **Float goes up** (\(u_{\text{underlying, now}} > u_{\text{open}}\)): the lender gets a higher payment from Aave than what they owe to the long — borrow income grows with utilization while the swap notional was fixed, so the lender earns **more** than the locked rate.
+- **Float goes down** (\(u_{\text{underlying, now}} < u_{\text{open}}\)): the payment from the long is greater than what it would have gotten from the Aave pool — the lender earns **less** than the locked rate, but \(r_{\text{borrow, now}}\) is also lower, dampening the shortfall.
+
+Because \(r_{\text{borrow}}\) and \(u\) move together on the interest rate curve, the payoff is **convex in utilization** — gains from rising utilization are amplified, losses from falling utilization are dampened.
 
 ---
 
@@ -67,18 +95,18 @@ Suppose you have $10,000 on Aave and boost $5,000:
 
 | Slice | Size | Earns roughly |
 |---|---|---|
-| Hedged | $5,000 | Boosted fixed (from your short) |
+| Hedged | $5,000 | Boosted profile from the short (formulas above) |
 | Unhedged | $5,000 | Aave floating |
 
-Your headline Effective Supply APY is a **blend** of those two. Boosting half the balance cannot make the whole $10,000 earn Desired APR.
+The headline Effective Supply APY is a **blend**. Boosting half your balance cannot make the whole $10,000 earn Desired APR.
 
-In simple terms (same tenor, one clip):
+In simple terms (one clip):
 
 $$
 \text{Effective Supply APY} \approx \frac{L_{\text{hedged}}}{L_{\text{total}}} \times r_{\text{boost}} + \frac{L_{\text{unhedged}}}{L_{\text{total}}} \times r_{\text{float}}
 $$
 
-(The app also accounts for time to each clip’s maturity when you have multiple boosts; the idea is the same — blend hedged and floating pieces over your total lend.)
+(The app also weights time to each clip’s maturity when you have several boosts. The idea stays the same: blend hedged and floating pieces over your total lend.)
 
 ### Current vs projected
 
@@ -87,16 +115,16 @@ $$
 | **Current** Effective Supply APY | Blended APY from boosts you already have open |
 | **Projected** Effective Supply APY | Estimate **after** the new clip you are about to confirm |
 
-Projected assumes the new hedge is included. Until a **limit** order fills, you are still on floating for that pending slice — so realized APY stays closer to current until fill.
+In the modal, the arrow compares current → projected for the quoted size.
 
-### Market vs limit projections
+### Market vs limit
 
-| Order type | Projection assumption |
+| Order type | What the projection assumes |
 |---|---|
-| **Market Short** | Fills now at **current** pool utilization |
-| **Limit Short** | Fills later when the market reaches your Desired APR; projection uses the utilization implied by that limit rate |
+| **Market Short** | Fills now at **current** pool utilization (\(u_{\text{underlying, open}}\)) |
+| **Limit Short** | Fills later at your Desired APR; notional uses \(u_{\text{implied, open}}\). Until fill, that slice stays on **floating** |
 
-Until a limit fills, you keep earning Aave float on that slice. Realized APY can differ if fill happens at a different utilization than assumed.
+**Pending hedged lend:** open limit shorts reserve Position Amount before fill. That slice is not yet on the boosted profile.
 
 ---
 
@@ -105,42 +133,51 @@ Until a limit fills, you keep earning Aave float on that slice. Realized APY can
 **Setup**
 
 - Aave USDC lend: **$10,000**
-- Current Aave floating supply APY: **4.0%**
 - You boost: **$5,000** (half your balance)
-- Desired / fill fixed rate on Supernova: **6.5%**
-- Pool utilization \(u\) ≈ **80%**, reserve factor \(rf\) ≈ **10%**
+- Reserve factor \(rf\) ≈ **10%**
+- Utilization at open \(u_{\text{underlying, open}}\) ≈ **80%**
+- Fixed rate at open \(r_{\text{fixed, open}}\) ≈ **6.5%**
+- Current floating supply APY on the unhedged slice ≈ **4.0%**
 
-**1. Boost on the hedged slice**
-
-$$
-\text{boost} \approx 6.5\% - 4.0\% = 2.5\% \text{ (250 bps)}
-$$
-
-**2. Notional on Supernova**
+**1. Notional**
 
 $$
-N \approx \$5{,}000 \times 0.80 \times (1 - 0.10) = \$3{,}600
+N = \$5{,}000 \cdot (1 - 0.10) \cdot 0.80 = \$3{,}600
 $$
 
-**3. Margin (order of magnitude)**
+**2. At open, if utilization has not moved yet**
 
-Around **~0.2%** of the lending position is posted as Supernova margin (separate USDC/USDT — not taken from your aTokens). For a $5,000 clip that is on the order of **~$10**, before any 2× market buffer the UI may recommend.
+Floating from Aave and floating paid on Supernova cancel on that notional. You are left receiving fixed on \(N\):
 
-**4. Effective Supply APY (simple blend)**
+$$
+\text{receive fixed} \approx \$3{,}600 \cdot 6.5\%
+$$
 
-- Hedged $5,000 ≈ **6.5%**
-- Unhedged $5,000 ≈ **4.0%**
+**3. If utilization rises after open**
+
+Aave pays on \(u_{\text{now}} > u_{\text{open}}\) while you still only pay floating on \(u_{\text{open}}\) — so you keep a positive float residual **on top of** the locked fixed.
+
+**4. Effective Supply APY (simple blend on total lend)**
+
+| Slice | Size | Rate (illustrative) |
+|---|---|---|
+| Hedged | $5,000 | ~boosted fixed profile |
+| Unhedged | $5,000 | ~4.0% floating |
 
 $$
 \text{Effective Supply APY} \approx 0.5 \times 6.5\% + 0.5 \times 4.0\% = 5.25\%
 $$
 
-So:
-
-- Desired APR / fixed on the hedge ≈ **6.5%**
-- Effective Supply APY on the **whole** $10k ≈ **5.25%**
+| Number | Value |
+|---|---|
+| Fixed locked on the hedge notional | **~6.5%** |
+| Effective Supply APY on the **whole** $10k | **~5.25%** |
 
 That gap is expected whenever you only boost part of your lend.
+
+**5. Margin (order of magnitude)**
+
+Around **~0.2%** of the lending position is posted as Supernova margin (separate USDC/USDT — not taken from your aTokens).
 
 ---
 
@@ -148,12 +185,15 @@ That gap is expected whenever you only boost part of your lend.
 
 | Term | Meaning |
 |---|---|
-| **Position Amount (L)** | Aave lend dollars you choose to hedge |
-| **Notional (N)** | Supernova short size ≈ \(L \times u \times (1-rf)\) |
+| **Position Amount (L)** | Aave lend you choose to hedge |
+| **Notional (N)** | \(L \cdot (1-rf) \cdot u_{\text{open}}\) (market: \(u_{\text{underlying, open}}\); limit: \(u_{\text{implied, open}}\)) |
 | **Desired APR** | Target fixed rate; also chooses market vs limit |
-| **Boost** | ≈ fixed − floating (when fixed > float) |
+| **Supply rate** | \(r_{\text{supply}} = (1-rf)\,u_{\text{underlying, now}}\,r_{\text{borrow, now}}\) |
+| **Aave receive** | \(L \cdot r_{\text{supply}} = L(1-rf)\,u_{\text{underlying, now}}\,r_{\text{borrow, now}}\) |
+| **Short pay / receive** | Floating / fixed on open (or implied) utilization × \(L(1-rf)\) |
 | **Effective Supply APY** | Blended APY on **total** Aave lend |
 | **Projected APY** | Estimate after the new clip (limit: after assumed fill) |
+| **Pending hedged** | L reserved by open limit shorts (not boosted until fill) |
 
 ---
 
