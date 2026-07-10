@@ -97,11 +97,11 @@ $$
 
 while any unhedged lend keeps earning the live supply rate \(r_{\text{supply}}\).
 
-### Multiple clips on one market
+### Multiple boosts on one market
 
-You can boost the same market several times. Each **clip** \(i\) has its own hedged size \(L_i\) and locked rate \(r_{\text{boost},i}\). Your total lend \(L_{\text{total}}\) then splits into:
+You can boost the same market several times. Each **boost** \(i\) has its own hedged size \(L_i\) and locked rate \(r_{\text{boost},i}\). Your total lend \(L_{\text{total}}\) then splits into:
 
-- each hedged clip \(L_i\), earning its locked \(r_{\text{boost},i}\) until maturity \(\tau\)
+- each hedged boost \(L_i\), earning its locked \(r_{\text{boost},i}\) until maturity \(\tau\)
 - the unhedged remainder \(L_{\text{total}} - \sum_i L_i\), earning \(r_{\text{supply}}\) throughout
 
 Effective Supply APY compounds every slice out to maturity \(\tau\) and annualizes the blend:
@@ -115,3 +115,15 @@ $$
 $$
 
 Because it is a blend, the headline number sits between \(r_{\text{supply}}\) and your locked \(r_{\text{boost},i}\) rates.
+
+### Multiple markets with varying maturities
+
+You can also boost the same lend across multiple markets with different maturities, each boost with its own \(\tau_i\). Each hedged boost earns its locked \(r_{\text{boost},i}\) until its maturity \(\tau_i\), then reverts to \(r_{\text{supply}}\) out to the latest maturity among these markets \(\tau_{\max}\):
+
+$$
+Y = \sum_i L_i \,(1 + r_{\text{boost},i})^{\tau_i} (1 + r_{\text{supply}})^{\tau_{\max} - \tau_i} + \Big(L_{\text{total}} - \sum_i L_i\Big)(1 + r_{\text{supply}})^{\tau_{\max}}
+$$
+
+$$
+\text{Effective Supply APY} = \left(\frac{Y}{L_{\text{total}}}\right)^{1/\tau_{\max}} - 1
+$$
