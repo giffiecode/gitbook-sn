@@ -42,3 +42,5 @@ When the market fixed rate trades **above** the underlying floating rate, that f
 ---
 
 [How to earn boosted fixed rate →](how-to-earn-boosted-fixed-rate.md)
+
+[How Boost Yield math works →](how-boost-yield-math-works.md)

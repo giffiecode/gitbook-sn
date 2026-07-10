@@ -57,3 +57,5 @@ You keep ~**99.8%** of capital on Aave / Morpho and can withdraw anytime liquidi
 2. **Short fixed rate** on Supernova when fixed > float
 3. **Market or limit order** — your choice on timing and price
 4. **Earn** boosted fixed rate while staying flexible on withdrawals
+
+For Position Amount vs notional, Effective Supply APY, and a worked example, see [How Boost Yield Math Works](how-boost-yield-math-works.md).
