@@ -11,9 +11,9 @@ Plain-language guide to the numbers in Yield Boost: what you earn on Aave, what 
 | Lending | Aave | Floating supply yield | — |
 | Short rate | Supernova | Fixed rate | Floating rate |
 
-A **short** on Supernova means you **receive fixed** and **pay floating** for the chosen tenor. **Position Amount (L)** is how much of your Aave lend you choose to hedge.
+A **short** on Supernova means you **receive fixed** and **pay floating** for the chosen tenor.
 
-The floating you earn from Aave and the floating you pay on Supernova are built to **offset each other**, leaving the fixed rate as your yield on the hedged slice. The sections below show the actual cashflows — and why utilization drift after the short opens is usually still favorable.
+The floating you earn from Aave and the floating you pay on Supernova are built to **offset each other**, leaving the fixed rate as your yield on the boosted slice. The sections below show the actual cashflows — and why utilization drift after the short opens is usually still favorable.
 
 **When boost is not attractive:** if the implied fixed rate is at or below the floating **borrow** rate, shorting does not beat simply lending on Aave. Enter when fixed is **above** floating borrow, or set a higher Desired APR as a limit and wait.
 
@@ -23,7 +23,7 @@ The floating you earn from Aave and the floating you pay on Supernova are built 
 
 ### Aave (ongoing)
 
-You keep earning floating **supply** yield on the hedged lend. On Aave you earn:
+You keep earning floating **supply** yield on the boosted lend. On Aave you earn:
 
 $$
 L \cdot r_{\text{supply}} = L \cdot (1 - rf) \cdot u_{\text{underlying, now}} \cdot r_{\text{borrow, now}}
@@ -33,7 +33,7 @@ where \(rf\) is the Aave **reserve factor**, \(u\) is pool **utilization**, and 
 
 ### Supernova short (locked at open)
 
-To hedge your Position Amount \(L\), you take a **short position with notional**:
+To boost your Position Amount \(L\), you take a **short position with notional**:
 
 $$
 N = L \cdot (1 - rf) \cdot u_{\text{open}}
@@ -59,7 +59,7 @@ Floating on Supernova uses **today’s** borrow rate, but utilization is **locke
 
 For a limit short, that slice of lend stays on pure Aave floating until the order **executes**; the short legs above turn on at execution.
 
-### Total P&L on the hedged slice
+### Total P&L on the boosted slice
 
 Adding the Aave leg and the two Supernova legs together:
 
@@ -70,13 +70,13 @@ u_{\text{open}} \cdot r_{\text{fixed, open}}
 \Big]
 $$
 
-The first term is the **locked fixed** on your hedge notional. The second term is what changes when pool utilization moves away from \(u_{\text{open}}\). If utilization never moved (\(u_{\text{underlying, now}} = u_{\text{open}}\)), the floating legs cancel exactly and you earn the locked fixed.
+The first term is the **locked fixed** on your short notional. The second term is what changes when pool utilization moves away from \(u_{\text{open}}\). If utilization never moved (\(u_{\text{underlying, now}} = u_{\text{open}}\)), the floating legs cancel exactly and you earn the locked fixed.
 
 ---
 
 ## Why utilization changes are still favorable
 
-The hedge is imperfect when utilization moves away from \(u_{\text{open}}\). But both directions still work in the lender's favor:
+The boost is imperfect when utilization moves away from \(u_{\text{open}}\). But both directions still work in the lender's favor:
 
 - **Float goes up** (\(u_{\text{underlying, now}} > u_{\text{open}}\)): the lender gets a higher payment from Aave than what they owe to the long — borrow income grows with utilization while the swap notional was fixed, so the lender earns **more** than the locked rate.
 - **Float goes down** (\(u_{\text{underlying, now}} < u_{\text{open}}\)): the payment from the long is greater than what it would have gotten from the Aave pool — the lender earns **less** than the locked rate, but \(r_{\text{borrow, now}}\) is also lower, dampening the shortfall.
@@ -87,22 +87,22 @@ Because \(r_{\text{borrow}}\) and \(u\) move together on the interest rate curve
 
 ## Effective Supply APY
 
-**Effective Supply APY** is the blended yield on your **entire** Aave balance for that asset — not only the hedged slices.
+**Effective Supply APY** is the blended yield on your **entire** Aave balance for that asset — not only the boosted slices.
 
-Each boost locks a **boost rate** on its hedged lend:
+Each boost locks a **boost rate** on its boosted lend:
 
 $$
 r_{\text{boost}} = (1 - rf) \cdot u_{\text{open}} \cdot r_{\text{fixed, open}}
 $$
 
-while any unhedged lend keeps earning the live supply rate \(r_{\text{supply}}\).
+while any unboosted lend keeps earning the live supply rate \(r_{\text{supply}}\).
 
 ### Multiple boosts on one market
 
-You can boost the same market several times. Each **boost** \(i\) has its own hedged size \(L_i\) and locked rate \(r_{\text{boost},i}\). Your total lend \(L_{\text{total}}\) then splits into:
+You can boost the same market several times. Each **boost** \(i\) has its own size \(L_i\) and locked rate \(r_{\text{boost},i}\). Your total lend \(L_{\text{total}}\) then splits into:
 
-- each hedged boost \(L_i\), earning its locked \(r_{\text{boost},i}\) until maturity \(\tau\)
-- the unhedged remainder \(L_{\text{total}} - \sum_i L_i\), earning \(r_{\text{supply}}\) throughout
+- each boost \(L_i\), earning its locked \(r_{\text{boost},i}\) until maturity \(\tau\)
+- the unboosted remainder \(L_{\text{total}} - \sum_i L_i\), earning \(r_{\text{supply}}\) throughout
 
 Effective Supply APY compounds every slice out to maturity \(\tau\) and annualizes the blend:
 
@@ -118,7 +118,7 @@ Because it is a blend, the headline number sits between \(r_{\text{supply}}\) an
 
 ### Multiple markets with varying maturities
 
-You can also boost the same lend across multiple markets with different maturities, each boost with its own \(\tau_i\). Each hedged boost earns its locked \(r_{\text{boost},i}\) until its maturity \(\tau_i\), then reverts to \(r_{\text{supply}}\) out to the latest maturity among these markets \(\tau_{\max}\):
+You can also boost the same lend across multiple markets with different maturities, each boost with its own \(\tau_i\). Each boost earns its locked \(r_{\text{boost},i}\) until its maturity \(\tau_i\), then reverts to \(r_{\text{supply}}\) out to the latest maturity among these markets \(\tau_{\max}\):
 
 $$
 Y = \sum_i L_i \,(1 + r_{\text{boost},i})^{\tau_i} (1 + r_{\text{supply}})^{\tau_{\max} - \tau_i} + \Big(L_{\text{total}} - \sum_i L_i\Big)(1 + r_{\text{supply}})^{\tau_{\max}}
