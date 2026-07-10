@@ -37,7 +37,7 @@ $$
 \text{net yield} \approx \text{fixed rate received on Supernova}
 $$
 
-When the market implied fixed rate trades **above** the underlying floating borrow rate, that fixed leg delivers the **200–250 bps premium** lenders see in practice.
+When the market fixed rate trades **above** the underlying floating rate, that fixed leg delivers the **200–250 bps premium** lenders see in practice.
 
 ---
 
