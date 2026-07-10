@@ -87,41 +87,31 @@ Because \(r_{\text{borrow}}\) and \(u\) move together on the interest rate curve
 
 ## Effective Supply APY
 
-**Effective Supply APY** is the blended yield on your **entire** Aave balance for that asset — not only the hedged slice.
+**Effective Supply APY** is the blended yield on your **entire** Aave balance for that asset — not only the hedged slices.
 
-### Why it is not equal to Desired APR
-
-Suppose you have $10,000 on Aave and boost $5,000:
-
-| Slice | Size | Earns roughly |
-|---|---|---|
-| Hedged | $5,000 | Boosted profile from the short (formulas above) |
-| Unhedged | $5,000 | Aave floating |
-
-The headline Effective Supply APY is a **blend**. Boosting half your balance cannot make the whole $10,000 earn Desired APR.
-
-In simple terms (one clip):
+Each boost locks a **boost rate** on its hedged lend:
 
 $$
-\text{Effective Supply APY} \approx \frac{L_{\text{hedged}}}{L_{\text{total}}} \times r_{\text{boost}} + \frac{L_{\text{unhedged}}}{L_{\text{total}}} \times r_{\text{float}}
+r_{\text{boost}} = (1 - rf) \cdot u_{\text{open}} \cdot r_{\text{fixed, open}}
 $$
 
-(The app also weights time to each clip’s maturity when you have several boosts. The idea stays the same: blend hedged and floating pieces over your total lend.)
+while any unhedged lend keeps earning the live supply rate \(r_{\text{supply}}\).
 
-### Current vs projected
+### Multiple clips on one market
 
-| Label | Meaning |
-|---|---|
-| **Current** Effective Supply APY | Blended APY from boosts you already have open |
-| **Projected** Effective Supply APY | Estimate **after** the new clip you are about to confirm |
+You can boost the same market several times. Each **clip** \(i\) has its own hedged size \(L_i\) and locked rate \(r_{\text{boost},i}\). Your total lend \(L_{\text{total}}\) then splits into:
 
-In the modal, the arrow compares current → projected for the quoted size.
+- each hedged clip \(L_i\), earning its locked \(r_{\text{boost},i}\) until maturity \(\tau\)
+- the unhedged remainder \(L_{\text{total}} - \sum_i L_i\), earning \(r_{\text{supply}}\) throughout
 
-### Market vs limit
+Effective Supply APY compounds every slice out to maturity \(\tau\) and annualizes the blend:
 
-| Order type | What the projection assumes |
-|---|---|
-| **Market Short** | Fills now at **current** pool utilization (\(u_{\text{underlying, open}}\)) |
-| **Limit Short** | Fills later at your Desired APR; notional uses \(u_{\text{implied, open}}\). Until fill, that slice stays on **floating** |
+$$
+Y = \sum_i L_i \,(1 + r_{\text{boost},i})^{\tau} + \Big(L_{\text{total}} - \sum_i L_i\Big)(1 + r_{\text{supply}})^{\tau}
+$$
 
-**Pending hedged lend:** open limit shorts reserve Position Amount before fill. That slice is not yet on the boosted profile.
+$$
+\text{Effective Supply APY} = \left(\frac{Y}{L_{\text{total}}}\right)^{1/\tau} - 1
+$$
+
+Because it is a blend, the headline number sits between \(r_{\text{supply}}\) and your locked \(r_{\text{boost},i}\) rates.
