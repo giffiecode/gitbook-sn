@@ -17,7 +17,7 @@ The floating you earn from Aave and the floating you pay on Supernova are built 
 
 ### Aave Lending
 
-You keep earning floating **supply** yield on the boosted lend. On Aave, you accrue:
+You keep earning floating **supply** yield on the boosted lend. On Aave, you receive per unit time:
 
 $$
 L \cdot r_{\text{supply}} = L \cdot (1 - rf) \cdot u_{\text{underlying, now}} \cdot r_{\text{borrow, now}}
@@ -35,7 +35,7 @@ $$
 
 $u_{\text{open}}$ is the pool **utilization at open** — it sizes your short notional and pairs with the locked fixed rate $r_{\text{fixed, open}}$. For a **market short**, it is pool utilization when the order executes; for a **limit short**, it is the utilization implied by your Desired APR when the order fills. Unlike $u_{\text{underlying, now}}$, it does not change after the short opens.
 
-Holding that short leads to the following cashflows — you pay floating and receive fixed on $N$:
+Holding that short leads to the following cashflows — you pay floating and receive fixed on $N$ per unit time:
 
 $$
 \begin{aligned}
@@ -67,31 +67,14 @@ The boost is imperfect when utilization moves away from $u_{\text{open}}$. But b
 
 ## Effective Supply APY
 
-**Effective Supply APY** is the blended yield on your **entire** Aave balance for that asset — not only the boosted slices.
+**Effective Supply APY** is the headline yield on your **entire** Aave balance for that asset — boosted and unboosted slices combined. This is the number shown in the app.
 
-Each boost locks a **boost rate** on its boosted lend:
+Each boost locks a **boost rate** on the slice you boosted:
 
 $$
 r_{\text{boost}} = (1 - rf) \cdot u_{\text{open}} \cdot r_{\text{fixed, open}}
 $$
 
-while any unboosted lend keeps earning the live supply rate $r_{\text{supply}}$.
+Effective Supply APY is the **size-weighted blend** of each boosted slice earning its locked $r_{\text{boost}}$ and any remaining unboosted lend earning the live supply rate $r_{\text{supply}}$. If only part of your lend is boosted, the headline sits between $r_{\text{supply}}$ and your locked boost rate(s).
 
-### Multiple boosts on one market
-
-You can boost the same market several times. Each **boost** $i$ has its own size $L_i$ and locked rate $r_{\text{boost},i}$. Your total lend $L_{\text{total}}$ then splits into:
-
-- each boost $L_i$, earning its locked $r_{\text{boost},i}$ until maturity $\tau$
-- the unboosted remainder $L_{\text{total}} - \sum_i L_i$, earning $r_{\text{supply}}$ throughout
-
-Effective Supply APY compounds every slice out to maturity $\tau$ and annualizes the blend:
-
-$$
-Y = \sum_i L_i \,(1 + r_{\text{boost},i})^{\tau} + \Big(L_{\text{total}} - \sum_i L_i\Big)(1 + r_{\text{supply}})^{\tau}
-$$
-
-$$
-\text{Effective Supply APY} = \left(\frac{Y}{L_{\text{total}}}\right)^{1/\tau} - 1
-$$
-
-Because it is a blend, the headline number sits between $r_{\text{supply}}$ and your locked $r_{\text{boost},i}$ rates.
+The projection uses today's $r_{\text{supply}}$ and your boost maturity as the horizon, so it can move if pool rates or utilization change.
