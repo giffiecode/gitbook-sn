@@ -58,4 +58,4 @@ You keep ~**99.8%** of capital on Aave / Morpho and can withdraw anytime liquidi
 3. **Market or limit order** — your choice on timing and price
 4. **Earn** boosted fixed rate while staying flexible on withdrawals
 
-For Position Amount vs notional, Effective Supply APY, and a worked example, see [How Boost Yield Math Works](how-boost-yield-math-works.md).
+To see more about how boost yield works and how Effective Supply APY is calculated, see [How Boost Yield Math Works](how-boost-yield-math-works.md).
