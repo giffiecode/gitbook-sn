@@ -76,5 +76,3 @@ r_{\text{boost}} = (1 - rf) \cdot u_{\text{open}} \cdot r_{\text{fixed, open}}
 $$
 
 Effective Supply APY is the **size-weighted blend** of each boosted slice earning its locked $r_{\text{boost}}$ and any remaining unboosted lend earning the live supply rate $r_{\text{supply}}$. If only part of your lend is boosted, the headline sits between $r_{\text{supply}}$ and your locked boost rate(s).
-
-The projection uses today's $r_{\text{supply}}$ and your boost maturity as the horizon, so it can move if pool rates or utilization change.
