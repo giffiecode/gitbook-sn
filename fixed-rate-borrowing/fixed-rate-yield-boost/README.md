@@ -8,7 +8,7 @@ Instead of locking capital into a fixed-term loan, you keep lending on-chain as 
 
 ## Why lenders like it
 
-**a) 99.9% of capital stays on Aave / Morpho**
+**a) ~99.8% of capital stays on Aave / Morpho**
 
 Nearly all of your deposit remains in the underlying money market's most liquid variable-rate pool. Only a thin margin (~30 bps of position size) is posted to Supernova to support the rates leg.
 
