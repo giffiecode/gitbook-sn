@@ -1,6 +1,6 @@
 # Fee
 
-Supernova Interest Rate Market revenue from two sources:<br>
+Rates Exchange Interest Rate Market revenue from two sources:<br>
 
 1. **Trading Fee (5 bps)**\
    A 0.05% fee is charged on the notional value of each rate trade and deducted from margin when opening a position.
