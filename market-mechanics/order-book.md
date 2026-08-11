@@ -1,6 +1,6 @@
 # Order Book
 
-Orders on Supernova Interest Rate Market are quoted and executed based on the **Implied APR**, representing the yield-derived price of the underlying rate exposure.
+Orders on Rates Exchange Interest Rate Market are quoted and executed based on the **Implied APR**, representing the yield-derived price of the underlying rate exposure.
 
 **Order Types**
 
