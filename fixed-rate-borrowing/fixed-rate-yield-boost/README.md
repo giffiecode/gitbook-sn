@@ -2,19 +2,19 @@
 
 A product built for lenders who want **higher, predictable yield** without giving up the liquidity and security of Aave or Morpho.
 
-Instead of locking capital into a fixed-term loan, you keep lending on-chain as usual and add a small short rate position on Supernova. The result is a **boosted fixed-rate return** — typically **200–250 bps above** the prevailing floating lending rate.
+Instead of locking capital into a fixed-term loan, you keep lending on-chain as usual and add a small rates hedge on Supernova. The result is a **boosted fixed-rate return** — typically **200–250 bps above** the prevailing floating lending rate.
 
 ---
 
 ## Why lenders like it
 
-**a) ~99.8% of capital stays on Aave / Morpho**
+**a) 99.9% of capital stays on Aave / Morpho**
 
 Nearly all of your deposit remains in the underlying money market's most liquid variable-rate pool. Only a thin margin (~30 bps of position size) is posted to Supernova to support the rates leg.
 
 **b) Withdraw anytime**
 
-You are not locked into a fixed-term loan. As long as Aave or Morpho has sufficient liquidity, you can withdraw your deposit on the usual terms. The Supernova position can be closed separately at any time.
+You are not locked into a fixed-term loan. As long as Aave or Morpho has sufficient liquidity, you can withdraw your deposit on the usual terms. The rates hedge can be closed separately at any time.
 
 **c) 200–250 bps fixed-rate premium, no term lock**
 
@@ -42,5 +42,3 @@ When the market fixed rate trades **above** the underlying floating rate, that f
 ---
 
 [How to earn boosted fixed rate →](how-to-earn-boosted-fixed-rate.md)
-
-[How Boost Yield math works →](how-boost-yield-math-works.md)

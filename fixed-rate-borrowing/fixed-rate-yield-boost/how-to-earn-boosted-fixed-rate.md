@@ -28,8 +28,6 @@ Typical boost: **200–250 bps**.
 
 ## Step 3 — Choose your execution
 
-Set your Desired APR — this determines the fixed rate you want and whether your boost enters as a market or limit short.
-
 | Method | When to use |
 |---|---|
 | **Market order** | Execute immediately at the best available implied rate |
@@ -47,7 +45,7 @@ $$
 \text{net yield} \approx \underbrace{\text{floating from Aave}}_{\text{earn}} - \underbrace{\text{floating on Supernova}}_{\text{pay}} + \underbrace{\text{fixed from Supernova}}_{\text{earn}} \;\approx\; \text{boosted fixed rate}
 $$
 
-You keep ~**99.8%** of capital on Aave / Morpho and can withdraw anytime liquidity permits. Close the Supernova short separately when you want to return to pure floating yield.
+You keep ~**99.9%** of capital on Aave / Morpho and can withdraw anytime liquidity permits. Close the Supernova short separately when you want to return to pure floating yield.
 
 ---
 
@@ -57,5 +55,3 @@ You keep ~**99.8%** of capital on Aave / Morpho and can withdraw anytime liquidi
 2. **Short fixed rate** on Supernova when fixed > float
 3. **Market or limit order** — your choice on timing and price
 4. **Earn** boosted fixed rate while staying flexible on withdrawals
-
-To see more about how boost yield works and how Effective Supply APY is calculated, see [How Boost Yield Math Works](how-boost-yield-math-works.md).

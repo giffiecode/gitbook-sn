@@ -10,7 +10,7 @@ description: >-
 **Lend (The "Savings" Product)**<br>
 
 * **Yield Boost:** Delivers a 200–300 bps premium on top of standard Aave/Morpho lending rates.
-* **Security:** ~99.8% of assets remain settled directly within Aave / Morpho.&#x20;
+* **Security:** 99.6% of assets remain settled directly within Aave /Morpho.&#x20;
 * **Flexibility:** Users maintain the ability to withdraw at any time while retaining the fixed-rate yield profile.
 {% endhint %}
 
@@ -34,7 +34,7 @@ The system identifies active lending positions across supported markets and pres
 
 **Upon confirmation, the user enters a short rate position on Supernova, receiving fixed and paying floating.** The floating-rate payments owed on the short-rate position are offset by the floating lending yield earned from Aave, Morpho, or the selected money market, effectively converting the position into a fixed-rate lending position for the chosen tenor until maturity. The market-determined **fixed rate is typically 200–250 bps above the prevailing floating lending rate, providing lenders with a fixed-rate yield boost.**
 
-To establish the position, a small amount of incremental collateral, typically around **30 bps of the lending position size, is bridged via Across to the Supernova rate account as margin.** **~99.8% of lending capital remains deposited in the underlying money market** and **can be withdrawn at any time.**
+To establish the position, a small amount of incremental collateral, typically around **30 bps of the lending position size, is bridged via Across to the Supernova rate account as margin.** Approximately **99.7% of lending capital remains deposited in the underlying money market** and **can be withdrawn at any time.**
 {% endstep %}
 
 {% step %}
@@ -46,12 +46,12 @@ If enabled, ParRate automatically closes the expiring long-rate position and ope
 {% step %}
 ### Manage or Exit Early (Optional)&#x20;
 
-Maintain flexibility by closing the short-rate position at any time. This reverts the loan to floating and allows full or partial repayment through Aave’s standard process.
+Maintain flexibility by closing the long-rate position at any time. This reverts the loan to floating and allows full or partial repayment through Morpho’s standard process.
 {% endstep %}
 
 {% step %}
 ### Settlement at Expiry&#x20;
 
-At term end, the short-rate position settles. You can withdraw your Supernova margin, and your Aave / Morpho lending position continues at floating.
+At term end, the position settles, margin is bridged back, and your Aave / Morpho loan continues at floating&#x20;
 {% endstep %}
 {% endstepper %}

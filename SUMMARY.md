@@ -11,8 +11,6 @@
   * [Lend at Boosted Fixed Rate on Aave / Morpho](fixed-rate-borrowing/user-guide-one-click-fixing-rate/lend-at-boosted-fixed-rate-on-aave-morpho.md)
 * [Fixed Rate Yield Boost](fixed-rate-borrowing/fixed-rate-yield-boost/README.md)
   * [How to Earn Boosted Fixed Rate](fixed-rate-borrowing/fixed-rate-yield-boost/how-to-earn-boosted-fixed-rate.md)
-  * [How Boost Yield Math Works](fixed-rate-borrowing/fixed-rate-yield-boost/how-boost-yield-math-works.md)
-  * [Risks & Liquidations](fixed-rate-borrowing/fixed-rate-yield-boost/risks-and-liquidations.md)
 
 ## Rates Trading
 
